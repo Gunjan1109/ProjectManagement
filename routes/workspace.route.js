@@ -2,14 +2,16 @@ const express = require("express")
 const router = express.Router()
 const workSpace_controller = require("../controllers/workspace.controller")
 const auth = require("../middlewares/auth")
-const workspaceAuth = require('../middlewares/workspaceAuth')
 
-router.post("/create",auth, workSpace_controller.create)
+router.post("/workspace",auth, workSpace_controller.create)
 
-router.put("/edit",auth,workspaceAuth, workSpace_controller.edit)
+router.put("/:wid",auth, workSpace_controller.edit)
 
-router.delete("/delete", auth,workspaceAuth, workSpace_controller.delete)
+router.post("/invite/:wid",auth,workSpace_controller.invite)
 
-router.get("/", auth, workSpace_controller.retrieveworkspace)
+router.delete("/:wid", auth, workSpace_controller.delete)
+
+router.get("/workspace/:wid",auth,workSpace_controller.workspace)
+
 
 module.exports = router

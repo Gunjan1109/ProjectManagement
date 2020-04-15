@@ -8,11 +8,14 @@
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "email-verification": "^0.4.6",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "mongoose": "^5.9.7",
     "morgan": "~1.9.1",
-    "password-hash": "^1.2.2"
+    "nodemailer": "^6.4.6",
+    "password-hash": "^1.2.2",
+    "uuid": "^7.0.3"
   }
 }

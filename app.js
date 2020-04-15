@@ -7,7 +7,6 @@ var logger = require('morgan');
 const mongoose = require("mongoose")
 var url =
 "mongodb+srv://gunjanNCU:7210476954@projectmanagement-tw5om.mongodb.net/test?retryWrites=true&w=majority"
-//var url = "mongodb://localhost:27017/OnlineShopping"
 mongoose.Promise = global.Promise
 // Connecting to the database
 mongoose
