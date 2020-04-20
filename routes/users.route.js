@@ -19,6 +19,6 @@ router.get("/confirm/:email",user_controller.confirm)
 
 router.post("/join",auth,user_controller.join)
 
-router.get("/", auth, user_controller.retrieveuser)
+router.get("/user", auth, user_controller.retrieveuser)
 
 module.exports = router
