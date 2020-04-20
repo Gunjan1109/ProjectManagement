@@ -11,25 +11,24 @@ exports.create = async (req, res) => {
     return res.status(409).send({ message: "Task already exists" })
   }
 
+  var user = await User.findOne({email : req.body.assignedTo})
+
   task = new Task({
     name: req.body.name,
     description : req.body.description,
-    dueDate : req.body.dueDate
+    dueDate : req.body.dueDate,
+    assignedTo : user._id
   })
 
   task = await task.save()
 
   var project = await Project.findByIdAndUpdate(req.params.pid,{"projects" : task._id},{ "new": true, "upsert": true })
 
-  res.status(200).send(task)
+  res.status(200).send(project)
 }
 
 exports.edit = async (req, res) => {
-    if(req.body.assignedTo != null){
-        var user = await User.findOne({email : req.body.assignedTo})
-    }
-  var task = await Task.findByIdAndUpdate(req.params.tid, {"name" : req.body.name , "description" : req.body.description , 
-  "dueDate" : req.body.dueDate , assignedTo : user._id , "status" : req.body.status},{ "new": true, "upsert": true })
+  var task = await Task.findByIdAndUpdate(req.params.tid, (req.body),{ "new": true, "upsert": true })
   
   user = await User.findByIdAndUpdate(user._id,{"tasks" : task._id},{ "new": true, "upsert": true })
 

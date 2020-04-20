@@ -7,7 +7,6 @@ let projectSchema = new mongoose.Schema({
     tasks : [{type : Schema.Types.ObjectId, ref : 'Task',required : true}],
     members : [{type : Schema.Types.ObjectId, ref : 'User',required : true}],
     owners :  [{type : Schema.Types.ObjectId, ref : 'User',required : true}],
-    accessType : {type : String , required : true},
     creationDate : {type : Date , required : true},
 
 })

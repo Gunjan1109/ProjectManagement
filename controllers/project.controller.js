@@ -1,5 +1,5 @@
 const Project = require("../models/project.model")
-const WorkSpace = require('../models/workspace.model')
+const User = require('../models/user.model')
 exports.create = async (req, res) => {
   
   var project = await WorkSpace.findOne({ name: req.body.name })
@@ -18,9 +18,9 @@ exports.create = async (req, res) => {
 
   project = await project.save()
 
-  var workspace = await WorkSpace.findByIdAndUpdate(req.params.wid,{"projects" : project._id},{ "new": true, "upsert": true })
+  var user = await User.findByIdAndUpdate(req.token.userId , {"projects" : project._id})
 
-  res.status(200).send(workspace)
+  res.status(200).send(user)
 }
 
 exports.edit = async (req, res) => {
@@ -41,12 +41,9 @@ exports.delete = async (req, res) => {
 }
 
 exports.project = async(req,res) => {
-  var project = await Project.findById(req.params.pid)
+  var project = await Project.findById(req.params.pid).populate("tasks")
   console.log(project)
   if(!project)
   res.status(404).send({message : "Project Not found"})
   res.status(200).send({project})
 }
-
-
-

@@ -6,6 +6,24 @@
   <title>Document</title>
 </head>
 <body>
-  
+
+    {{#if user}}
+    <div>
+      Welcome {{user.name}}
+      <p>{{user.email}}</p>
+       </div>
+
+      {{else}}
+    <button onclick="signup()">SignUp</button>
+   
+    {{/if}}
+
+    
+
+    <script>
+      function signup(){
+        window.location = "/signuppage"
+      }
+    </script>
 </body>
 </html>

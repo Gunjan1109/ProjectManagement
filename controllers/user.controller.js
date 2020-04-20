@@ -4,7 +4,8 @@ const Token = require("../models/user.token.model")
 const PasswordHash = require("password-hash")
 const nodemailer = require("nodemailer");
 exports.signup = async (req, res) => {
-  
+  console.log("in signup")
+  console.log(req.body)
   // First check if account exists with this email id
   var user = await User.findOne({ email: req.body.email })
   if (user) {
@@ -43,6 +44,7 @@ exports.signup = async (req, res) => {
   });
 
   console.log("Message sent to " + req.body.email);
+  console.log("after email")
  
   // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
@@ -148,7 +150,7 @@ exports.signoutall = async (req, res) => {
 exports.edit = async (req,res) => {
   console.log("in edit")
   console.log(req.token.userId)
-  var user = await User.findByIdAndUpdate(req.token.userId,{"name" : req.body.name , "gender" : req.body.gender},{useFindAndModify: false})
+  var user = await User.findByIdAndUpdate(req.token.userId,{"name" : req.body.name , "gender" : req.body.gender})
 
   console.log(user)
   if(!user){
@@ -173,7 +175,7 @@ exports.changePassword = async (req,res) => {
   }
   
   console.log("After checking password")
-  var user = await User.findByIdAndUpdate(req.token.userId, {"password" : PasswordHash.generate(req.body.newpassword)},{useFindAndModify: false})
+  var user = await User.findByIdAndUpdate(req.token.userId, {"password" : PasswordHash.generate(req.body.newpassword)})
 
   res.status(200).send({message : 'password Updated'})
 }
@@ -185,7 +187,7 @@ exports.join = async(req,res) => {
 
 exports.retrieveuser = async (req, res) => {
   // Send user associated with userId
-  var user = await User.findById(req.token.userId)
+  var user = await User.findById(req.token.userId).populate("workspaces","projects","tasks")
   if (!user) {
     res.status(404).send({ message: "User not found" })
   }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Document</title>
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+    {{#if message}}
+     <div class="alert alert-primary" role="alert">
+         
+             {{messsage}}
+         </div>
+         {{else}}
+         <div></div>
+         {{/if}}
+    <!-- Material form register -->
+<div class="card">
+
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Sign up</strong>
+    </h5>
+
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0">
+
+        <!-- Form -->
+        <form class="text-center" style="color: #757575;">
+
+            <div class="form-row">
+                <div class="col">
+                    <!-- name -->
+                    <div class="md-form">
+                        <input type="text" name="name" id="name" class="form-control">
+                        <label for="materialRegisterFormFirstName">Name</label>
+                    </div>
+                </div>
+                </div>
+            <!-- E-mail -->
+            <div class="md-form mt-0">
+                <input type="email" name="email" id="email" class="form-control">
+                <label for="materialRegisterFormEmail">E-mail</label>
+            </div>
+
+            <!-- Password -->
+            <div class="md-form">
+                <input type="password" name="password" id="password" class="form-control" aria-describedby="materialRegisterFormPasswordHelpBlock">
+                <label for="materialRegisterFormPassword">Password</label>
+               
+            </div>
+
+           
+
+            <!-- Newsletter -->
+            
+
+            <!-- Sign up button -->
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0">Sign Up</button>
+
+            <!-- Social register -->
+           
+           
+        </form>
+        <!-- Form -->
+    <p style="color:red" id="error"></p>
+    </div>
+
+</div>
+<!-- Material form register -->
+<script>
+    document.querySelector('button').addEventListener('click', register);
+    function register(){    
+        console.log("in register")
+    var name = document.getElementById("name").value
+    var email = document.getElementById("email").value
+    var password = document.getElementById("password").value
+    console.log(name,email)
+    var xmlHttpRequest = new XMLHttpRequest()
+    xmlHttpRequest.onreadystatechange = function () {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                document.cookie = "authorization=" + this.getResponseHeader("authorization")
+                console.log("signup success")
+                window.location = "/signuppage"
+            }
+            else {
+                document.getElementById("error").innerText = JSON.parse(this.responseText).message
+            }
+        }
+    }
+    xmlHttpRequest.open("POST", "/api/users/signup", true)
+    xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+    xmlHttpRequest.send(JSON.stringify({ name: name, email: email, password: password }))
+}
+</script>
+    
+
+</body>
+</html>
+

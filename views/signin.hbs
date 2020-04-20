@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+        
+    <div class="card">
+
+    <h5 class="card-header info-color white-text text-center py-4">
+        <strong>Sign up</strong>
+    </h5>
+
+    <!--Card content-->
+    <div class="card-body px-lg-5 pt-0">
+
+        <!-- Form -->
+        <form class="text-center" style="color: #757575;">
+            
+                
+            <!-- E-mail -->
+            <div class="md-form mt-0">
+                <input type="email" name="email" id="materialloginFormEmail" class="form-control">
+                <label for="materialloginFormEmail">E-mail</label>
+            </div>
+
+            <!-- Password -->
+            <div class="md-form">
+                <input type="password" name="password" id="materialloginFormPassword" class="form-control" aria-describedby="materialloginFormPasswordHelpBlock">
+                <label for="materialloginFormPassword">Password</label>
+               
+            </div>
+
+           
+
+            <!-- Newsletter -->
+            
+
+            <!-- Sign up button -->
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" onclick="login()">Sign in</button>
+
+            <!-- Social login -->
+           
+        </form>
+        </div>
+        </div>
+        
+        <script>
+    document.querySelector('button').addEventListener('click', login);
+    function login(){    
+        console.log("in login")
+    var email = document.getElementById("email").value
+    var password = document.getElementById("password").value
+    var xmlHttpRequest = new XMLHttpRequest()
+    xmlHttpRequest.onreadystatechange = function () {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                document.cookie = "authorization=" + this.getResponseHeader("authorization")
+                console.log("signup success")
+                window.location = "/"
+            }
+            else {
+                document.getElementById("error").innerText = JSON.parse(this.responseText).message
+            }
+        }
+    }
+    xmlHttpRequest.open("POST", "/api/users/signin", true)
+    xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+    xmlHttpRequest.send(JSON.stringify({ email: email, password: password }))
+}
+</script>
+
+
+</body>
+</html>
