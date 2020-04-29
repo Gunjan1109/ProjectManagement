@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
 
   project = await project.save()
 
-  var user = await User.findByIdAndUpdate(req.token.userId , {"projects" : project._id},{ "new": true, "upsert": true })
+  var user = await User.findByIdAndUpdate(req.token.userId , {"projects" : [project._id]},{ "new": true, "upsert": true })
 
   res.status(200).send(user)
 }
@@ -48,7 +48,7 @@ exports.delete = async (req, res) => {
 }
 
 exports.project = async(req,res) => {
-  var project = await Project.findById(req.params.pid).populate("tasks")
+  var project = await Project.findOne({name : req.body.name}).populate("tasks")
   console.log(project)
   if(!project)
   res.status(404).send({message : "Project Not found"})

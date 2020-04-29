@@ -11,6 +11,6 @@ router.post("/invite/:pid", auth, project_controller.invite)
 
 router.delete("/:pid", auth, project_controller.delete)
 
-router.get("/:id",auth,project_controller.project)
+router.get("/",auth,project_controller.project)
 
 module.exports = router 
