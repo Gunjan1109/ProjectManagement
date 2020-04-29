@@ -1,79 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Register for Beetle</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+		<!-- LINEARICONS -->
+		<link rel="stylesheet" href="/fonts/linearicons/style.css">
+		
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="/stylesheets/style.css">
+		<script src="/javascripts/script.js"></script>
+	</head>
 
-        
-    <div class="card">
+	<body>
 
-    <h5 class="card-header info-color white-text text-center py-4">
-        <strong>Sign up</strong>
-    </h5>
-
-    <!--Card content-->
-    <div class="card-body px-lg-5 pt-0">
-
-        <!-- Form -->
-        <form class="text-center" style="color: #757575;">
-            
-                
-            <!-- E-mail -->
-            <div class="md-form mt-0">
-                <input type="email" name="email" id="materialloginFormEmail" class="form-control">
-                <label for="materialloginFormEmail">E-mail</label>
-            </div>
-
-            <!-- Password -->
-            <div class="md-form">
-                <input type="password" name="password" id="materialloginFormPassword" class="form-control" aria-describedby="materialloginFormPasswordHelpBlock">
-                <label for="materialloginFormPassword">Password</label>
-               
-            </div>
-
-           
-
-            <!-- Newsletter -->
-            
-
-            <!-- Sign up button -->
-            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" onclick="login()">Sign in</button>
-
-            <!-- Social login -->
-           
-        </form>
-        </div>
-        </div>
-        
-        <script>
-    document.querySelector('button').addEventListener('click', login);
-    function login(){    
-        console.log("in login")
-    var email = document.getElementById("email").value
-    var password = document.getElementById("password").value
-    var xmlHttpRequest = new XMLHttpRequest()
-    xmlHttpRequest.onreadystatechange = function () {
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                document.cookie = "authorization=" + this.getResponseHeader("authorization")
-                console.log("signup success")
-                window.location = "/"
-            }
-            else {
-                document.getElementById("error").innerText = JSON.parse(this.responseText).message
-            }
-        }
-    }
-    xmlHttpRequest.open("POST", "/api/users/signin", true)
-    xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
-    xmlHttpRequest.send(JSON.stringify({ email: email, password: password }))
-}
-</script>
-
-
-</body>
+		<div class="wrapper">
+			<div class="inner">
+				<img src="/images/image1.png" alt="" class="image-1">
+				<form>
+					<div class="form-holder">
+						<span class="lnr lnr-envelope"></span>
+						<input type="text" id="email" class="form-control" placeholder="Mail">
+					</div>
+					<div class="form-holder">
+						<span class="lnr lnr-lock"></span>
+						<input type="password" id="password" class="form-control" placeholder="Password">
+					</div>
+					
+					<button onclick="login()" type="button">
+						<span>Login</span>
+					</button>
+					<div>
+						<p style="color: red;" id="error"></p>
+					</div>
+				</form>
+				<img src="/images/image2.png" alt="" class="image-2">
+			</div>
+			
+		</div>
+		
+	</body>
 </html>

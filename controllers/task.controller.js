@@ -5,12 +5,6 @@ const Project = require('../models/project.model')
 const User = require('../models/user.model')
 exports.create = async (req, res) => {
   
-  var task = await WorkSpace.findOne({ name: req.body.name })
-  if (task) {
-    // 409 : Conflict
-    return res.status(409).send({ message: "Task already exists" })
-  }
-
   var user = await User.findOne({email : req.body.assignedTo})
 
   task = new Task({

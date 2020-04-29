@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Register for Beetle</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- LINEARICONS -->
+	<link rel="stylesheet" href="/fonts/linearicons/style.css">
+
+	<!-- STYLE CSS -->
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<script src="/javascripts/script.js"></script>
+</head>
+
+<body>
+
+	<div class="wrapper">
+		<div class="inner">
+			<img src="/images/image1.png" alt="" class="image-1">
+			<form>
+				<h3>New Account?</h3>
+				<div class="form-holder">
+					<span class="lnr lnr-user"></span>
+					<input type="text" id="name" class="form-control" placeholder="Username">
+				</div>
+
+				<div class="form-holder">
+					<span class="lnr lnr-envelope"></span>
+					<input type="text" id="email" class="form-control" placeholder="Mail">
+				</div>
+				<div class="form-holder">
+					<span class="lnr lnr-lock"></span>
+					<input type="password" id="password" class="form-control" placeholder="Password">
+				</div>
+
+				<button onclick="register()" type="button">
+					<span>Register</span>
+				</button>
+
+				{{#if message}}
+				<div>
+					<p style="color: green;">{{message}}</p>
+				</div>
+				{{/if}}
+				<div>
+					<p style="color: red;" id="error"></p>
+				</div>
+			</form>
+			<img src="/images/image2.png" alt="" class="image-2">
+		</div>
+
+	</div>
+
+
+</body>
+</html>

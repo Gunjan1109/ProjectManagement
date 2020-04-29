@@ -3,6 +3,8 @@ const User = require("../models/user.model")
 const Token = require("../models/user.token.model")
 const PasswordHash = require("password-hash")
 const nodemailer = require("nodemailer");
+const Project = require('../models/project.model')
+const Task = require('../models/task.model')
 exports.signup = async (req, res) => {
   console.log("in signup")
   console.log(req.body)
@@ -17,7 +19,6 @@ exports.signup = async (req, res) => {
   // Make sure to hash the password
   user = new User({
     email: req.body.email,
-    gender : req.body.gender,
     password: PasswordHash.generate(req.body.password),
     name: req.body.name
   })
@@ -36,11 +37,11 @@ exports.signup = async (req, res) => {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"gunjangarg092000@gmail.com', // sender address
+    from: "gunjangarg092000@gmail.com", // sender address
     to: req.body.email, // list of receivers
     subject: "Email Verifcation", // Subject line
     text: `Click this link for verification`, // plain text body
-    html: `<a href = "http://localhost:3000/api/users/confirm/${req.body.email}">Click this link</a>` // html body
+    html: `<a href = "http://localhost:3000/api/users/confirm/${req.body.email}">Click this link for veification</a>` // html body
   });
 
   console.log("Message sent to " + req.body.email);
@@ -87,7 +88,7 @@ exports.confirm = async(req,res) => {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"gunjangarg092000@gmail.com', // sender address
+    from:  "gunjangarg092000@gmail.com", // sender address
     to: req.params.email, // list of receivers
     subject: "Email Verified", // Subject line
     text: "Congratulations You are verified now", // plain text body
@@ -101,7 +102,7 @@ exports.confirm = async(req,res) => {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     }
 
-    res.send({message : "Verified"})
+    res.render("signin")
 }
 
 exports.signin = async (req, res) => {
@@ -187,7 +188,8 @@ exports.join = async(req,res) => {
 
 exports.retrieveuser = async (req, res) => {
   // Send user associated with userId
-  var user = await User.findById(req.token.userId).populate("workspaces","projects","tasks")
+  console.log("in retrieve")
+  var user = await User.findById(req.token.userId).populate("projects")
   if (!user) {
     res.status(404).send({ message: "User not found" })
   }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="layout.css"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <style>
+     
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+    .row.content {height: 1500px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color:ivory;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height: auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <h4 style="font-size: 30px;box-sizing: border-box;color: crimson; font-weight:400;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ">PROFILE - INFORMATION</h4><br>
+     <img style="height: 200px;width: 200px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTkhdUUbnEjgVV3Py5PT2dP-hhdEK_ID7s4PuyJ3j02_Wbf8xK1&usqp=CAU"><br><br>
+     <input class="btn btn-primary" type="reset" value="Edit Photo"><br><br>
+
+      <ul class="nav nav-pills nav-stacked">
+        <li style="font-size: 25px;color: blue;font-family: Arial, Helvetica, sans-serif;" class="active">Work Link</li><br>
+         <li style="font-size: 18px;">Website link</li>
+        <li style="font-size: 18px;" >Bootsnip profile</li>
+        <li style="font-size: 18px;">Bootsply profile</li>
+      </ul><br>
+      <ul class="nav nav-pills nav-stacked">
+        <li style="font-size: 25px;color: blue;font-family: Arial, Helvetica, sans-serif" class="active">Skills</li><br>
+        <li style="font-size: 18px;">Web Designer</li>
+        <li style="font-size: 18px;">Web developer</li>
+        <li style="font-size: 18px;">Word press</li>
+        <li style="font-size: 18px;">Woocommerce</li>
+      </ul><br><br><br>
+      
+      
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search..">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <h4><small>Beetle user profile</small></h4>
+      <hr>
+      <h2>RIHAN OBEROI</h2>
+      <h5><span></span> Web developer and designer</h5>
+      <h5><span class="label label-danger">UI</span> <span class="label label-primary">UX</span></h5><br>
+      <p>Rihan is a Web design professional at Infotech, an inbound software development platform that helps companies build softwares, convert leads, and close customers. Previously, Rihan worked as a marketing manager for a tech software startup. He graduated with honors from Columbia University with a dual degree in Business Administration and software development"</p>
+      
+      
+      <h4><small>Rating 8/10</small></h4>
+      <hr>
+      <div class="l1">
+      <h2>ABOUT</h2>
+     
+    </div>
+ 
+     
+      <p>
+        <ul style="margin-right: 10px;">
+          <li>USER-ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rihan12</li><br>
+          <li>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rihan Oberoi</li><br>
+          <li>EMAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rihan123@gmail.com</li><br>
+          <li>PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9818657483</li><br>
+          <li>PROFILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Web designer and developer</li><br>
+        </ul>
+      </p>
+      <button style="margin-right: 20px;"  type="button" class="btn btn-secondary btn-sm">Edit Profile</button><br>
+      <hr>
+
+     
+
+<footer class="container-fluid">
+  <p style="color: darkblue;font-size: 20px;font-weight: 500;;">For any issues contact-- beetleindia@gmail.com- or -beetleltd@gmail.com</p> 
+</footer>
+
+</body>
+</html>

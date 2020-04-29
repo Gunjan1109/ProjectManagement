@@ -1,29 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Beetle | Making work easy</title>
+    <link rel="stylesheet" href="/stylesheets/css.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Rock+Salt&display=swap" rel="stylesheet">
+
+
 </head>
+
 <body>
+    <div class="wrapper">
+        <div class="header">
+            <div id="logo">
+                <h1 text-align="left" margin-top="550px" margin-left="50px"><span>B</span>EETLE</h1>
+            </div>
+            <div id="navbar">
+                <nav>
 
-    {{#if user}}
-    <div>
-      Welcome {{user.name}}
-      <p>{{user.email}}</p>
-       </div>
+                    <ul>
+                        <li><a href="/signuppage"> Get started </a> </li>
+                        <li><a href="/signuppage">Sign Up</a></li>
+                        <li><a href="/signinpage">Login</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Help</a></li>
 
-      {{else}}
-    <button onclick="signup()">SignUp</button>
-   
-    {{/if}}
+                    </ul>
 
-    
+                </nav>
 
-    <script>
-      function signup(){
-        window.location = "/signuppage"
-      }
-    </script>
+
+            </div>
+        </div>
+
+
+        <div id="content">
+            
+            <h1>Experience the leisure</h1>
+            <!-- <button type="button" class="btn btn-primary btn-lg" >BootNik</button> -->
+            <!-- <h3><button type="button" class="btn btn-primary">Try BootNik</button></h3> -->
+
+
+        
+    </div>
 </body>
+
 </html>

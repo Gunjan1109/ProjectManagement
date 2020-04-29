@@ -1,0 +1,99 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+ nav ul li {
+    list-style-type: none;
+    margin-right: 15px;
+    border-right: 1px solid maroon;
+    padding-right: 8px;
+    
+}
+nav ul li a{
+    text-decoration: none;
+    color:maroon;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+nav ul li a:hover{
+    text-decoration: none;
+    color:black;
+}
+
+nav ul{
+    display: flex;
+    
+}
+nav ul{
+    margin-top: 30px;
+    margin-right: 25px;
+    padding: 10px;
+    letter-spacing: 2px;
+    font-size: 20px; 
+
+}
+
+#logo{
+    margin-left: 50px;
+    margin-top: 29px;
+    display: flex;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    
+}
+#BootNik{
+    font-size: xx-large;
+}
+#content {
+   
+    margin-left: 80px;
+    
+    
+}
+/*
+ #content h1{
+    margin-left: 230px;
+   
+}
+
+{
+    margin-left: 270px;
+    margin-top: 10px;
+}
+#content h3{
+    text-align: center;
+    margin-right: 350px;
+    margin-top: 15px;
+    
+} */
+
+body{ 
+    background: url(../images/homeimage.png) center center no-repeat;
+    background-attachment: fixed;
+    background-size:100% auto;
+}
+
+#logo{
+    display: flexsw;
+}
+#logo h1{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.header #logo h1{
+    font-size: 55px;
+    color:maroon;
+    margin-left:0px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-family: 'Abril Fatface', cursive;
+}
+span{
+    font-family: 'Abril Fatface', cursive;
+    font-size:80px;
+    margin-top: 75px;
+} 
+#content h1{
+    color: maroon;
+    margin-left: -20px;
+}
+
+

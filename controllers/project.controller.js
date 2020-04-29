@@ -1,8 +1,9 @@
 const Project = require("../models/project.model")
 const User = require('../models/user.model')
+
 exports.create = async (req, res) => {
   
-  var project = await WorkSpace.findOne({ name: req.body.name })
+  var project = await Project.findOne({ name: req.body.name })
   if (project) {
     // 409 : Conflict
     return res.status(409).send({ message: "Same Project name already exists" })
@@ -11,16 +12,22 @@ exports.create = async (req, res) => {
   project = new Project({
     name: req.body.name,
     members : req.token.userId,
-    owner : req.token.userId,
+    owners : req.token.userId,
     accessType : req.body.accessType,
     creationDate : new Date()
   })
 
   project = await project.save()
 
-  var user = await User.findByIdAndUpdate(req.token.userId , {"projects" : project._id})
+  var user = await User.findByIdAndUpdate(req.token.userId , {"projects" : project._id},{ "new": true, "upsert": true })
 
   res.status(200).send(user)
+}
+
+exports.invite = async (req,res) => {
+  var user = await User.findOne({email : req.body.email})
+  user = await User.findByIdAndUpdate(user._id,{projects : req.params.pid});
+  
 }
 
 exports.edit = async (req, res) => {
