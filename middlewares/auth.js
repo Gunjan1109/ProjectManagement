@@ -3,7 +3,7 @@
 const Token = require("../models/user.token.model");
 
 module.exports = async function(req, res, next) {
-  const tokenId = "5ea8336e17be844b5cb18a50"
+  const tokenId = req.headers["authorization"];
   console.log(tokenId)
   if (!tokenId) {
     // 401 : Unauthorized

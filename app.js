@@ -25,7 +25,7 @@ mongoose
 var indexRouter = require('./routes/index.route');
 var usersRouter = require('./routes/users.route');
 var projectRouter = require('./routes/project.route')
-
+var taskRouter = require('./routes/task.route')
 var app = express();
 
 // view engine setup
@@ -41,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/projects' , projectRouter)
+app.use('/api/task' , taskRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -57,6 +57,64 @@ exports.homepage = function(req,res) {
 
     }
 
+exports.homepage2 =function(req,res){
+    console.log(req.params.pname)
+    var pname = req.params.pname
+    var data = {}
+    var promises = []
+    console.log("in homepage2")
+    
+        var userPromise = new Promise((resolve, reject) => {
+            // Create options
+            const options = {
+                hostname: req.hostname,
+                port: 3000,
+                path: "/api/projects/"+pname,
+                method: "GET",
+                headers: { authorization: req.cookies.authorization }
+            }
+
+            // Make http request
+            const httpReq = http.request(options, httpRes => {
+                var buff = ""
+                httpRes.on("data", chunks => {
+                    buff += chunks
+                })
+
+                httpRes.on("end", () => {
+                    if (httpRes.statusCode === 200) {
+                        data = JSON.parse(buff)
+                        resolve()
+                    }
+                    else {
+                        reject(JSON.parse(buff))
+                    }
+
+                })
+            })
+
+            httpReq.on("error", error => {
+                reject(error)
+            })
+
+            httpReq.end()
+        })
+        promises.push(userPromise)
+
+        Promise.all(promises).then(() => {
+            console.log(data)
+            res.render("beetle2", data)
+        }).catch(error => {
+            console.log(error)
+            res.render("error", error)
+        })
+    
+
+}    
+
+
+
+
 exports.startpage = function(req,res){
     res.render("index")
 }
@@ -76,3 +134,10 @@ exports.projectpage = function (req,res){
     res.render("project")
 }
 
+exports.taskpage = function(req,res){
+    res.render("task")
+}
+
+exports.addmembers = function(req,res){
+    res.render("addmember")
+}

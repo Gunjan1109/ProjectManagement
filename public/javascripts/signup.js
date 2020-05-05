@@ -8,7 +8,8 @@ function register(){
         if (this.readyState === 4) {
             if (this.status === 200) {
                 console.log("signup success")
-                window.location = "/signuppage"
+                document.getElementById("message").innerHTML = JSON.parse(this.responseText).message
+                
             }
             else {
                 document.getElementById("error").innerText = JSON.parse(this.responseText).message

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form class="border border-light p-5">
+
+    <p class="h4 mb-4 text-center">Add Member</p>
+
+    <label for="textInput">Project Name</label>
+    <input type="text" id="name" class="form-control mb-4" placeholder="Name">
+
+      <label for="textInput">Email</label>
+        <input type="text" id="email" class="form-control mb-4" placeholder="Email of person">
+
+    
+
+    <div>
+        <p id="error" style="color: red;"></p>
+    </div>
+    <button class="btn btn-info btn-block my-4" type="button" onclick="addmember()">Add</button>
+
+</form>
+
+    <script>
+        function addmember(){
+            console.log("in add")
+            var name = document.getElementById("name").value
+            var email = document.getElementById("email").value
+            var xmlHttpRequest = new XMLHttpRequest()
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState === 4) {
+                    if (this.status === 200) {
+                       
+                        console.log("Add success")
+                        window.location = "/homepage"
+                    }
+                    else {
+                        document.getElementById("error").innerText = JSON.parse(this.responseText).message
+                    }
+                }
+            }
+            xmlHttpRequest.open("POST", "/api/projects/invite", true)
+            xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+            xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
+            xmlHttpRequest.send(JSON.stringify({ name: name, email: email }))
+        }
+    </script>
+</body>
+</html>
