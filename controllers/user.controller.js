@@ -102,7 +102,7 @@ exports.confirm = async(req,res) => {
   console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
     }
 
-    res.render("signin")
+    res.render("verify")
 }
 
 exports.signin = async (req, res) => {
