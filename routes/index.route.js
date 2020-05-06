@@ -20,9 +20,6 @@ router.get("/taskpage" , index_controller.taskpage)
 
 router.get("/addmembers",index_controller.addmembers)
 
-router.get("/profile" , function (req,res) {
-    console.log("in profile")
-    res.render("profile")
-})
+router.get("/profile" , index_controller.profile)
 
 module.exports = router;

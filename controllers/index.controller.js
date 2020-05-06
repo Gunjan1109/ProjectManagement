@@ -141,3 +141,7 @@ exports.taskpage = function(req,res){
 exports.addmembers = function(req,res){
     res.render("addmember")
 }
+
+exports.profile  =function(req,res){
+    res.render("profile")
+}
