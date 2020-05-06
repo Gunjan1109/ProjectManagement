@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var index_controller = require('../controllers/index.controller')
-
+var auth = require('../middlewares/auth')
 /* GET home page. */
 
 router.get("/", index_controller.startpage)
@@ -21,5 +21,9 @@ router.get("/taskpage" , index_controller.taskpage)
 router.get("/addmembers",index_controller.addmembers)
 
 router.get("/profile" , index_controller.profile)
+
+router.get("/updatetask",auth, index_controller.updatetask)
+
+router.get("/deletetaskpage",auth , index_controller.deletetaskpage)
 
 module.exports = router;

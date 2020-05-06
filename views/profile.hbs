@@ -39,7 +39,7 @@
 <body>
 
 <div class="container-fluid">
-  <div class="row content">
+  {{!-- <div class="row content">
     <div class="col-sm-3 sidenav">
       <h4 style="font-size: 30px;box-sizing: border-box;color: crimson; font-weight:400;font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ">PROFILE - INFORMATION</h4><br>
      <img style="height: 200px;width: 200px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTkhdUUbnEjgVV3Py5PT2dP-hhdEK_ID7s4PuyJ3j02_Wbf8xK1&usqp=CAU"><br><br>
@@ -68,18 +68,17 @@
           </button>
         </span>
       </div>
-    </div>
-
+    </div> --}}
+    {{#if user}}
     <div class="col-sm-9">
       <h4><small>Beetle user profile</small></h4>
       <hr>
-      <h2>RIHAN OBEROI</h2>
+      <h2>{{user.name}}</h2>
       <h5><span></span> Web developer and designer</h5>
       <h5><span class="label label-danger">UI</span> <span class="label label-primary">UX</span></h5><br>
-      <p>Rihan is a Web design professional at Infotech, an inbound software development platform that helps companies build softwares, convert leads, and close customers. Previously, Rihan worked as a marketing manager for a tech software startup. He graduated with honors from Columbia University with a dual degree in Business Administration and software development"</p>
+      <p>{{user.name}} is a Web design professional at Infotech, an inbound software development platform that helps companies build softwares, convert leads, and close customers. Previously, Rihan worked as a marketing manager for a tech software startup. He graduated with honors from Columbia University with a dual degree in Business Administration and software development"</p>
       
       
-      <h4><small>Rating 8/10</small></h4>
       <hr>
       <div class="l1">
       <h2>ABOUT</h2>
@@ -89,17 +88,14 @@
      
       <p>
         <ul style="margin-right: 10px;">
-          <li>USER-ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rihan12</li><br>
-          <li>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rihan Oberoi</li><br>
-          <li>EMAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rihan123@gmail.com</li><br>
-          <li>PHONE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9818657483</li><br>
-          <li>PROFILE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Web designer and developer</li><br>
+          <li>NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.name}}</li><br>
+          <li>EMAIL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.email}}</li><br>
+          <li>CONFIRMATION STATUS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user.isConfirmed}}</li><br>
         </ul>
       </p>
-      <button style="margin-right: 20px;"  type="button" class="btn btn-secondary btn-sm">Edit Profile</button><br>
       <hr>
 
-     
+     {{/if}}
 
 <footer class="container-fluid">
   <p style="color: darkblue;font-size: 20px;font-weight: 500;;">For any issues contact-- beetleindia@gmail.com- or -beetleltd@gmail.com</p> 

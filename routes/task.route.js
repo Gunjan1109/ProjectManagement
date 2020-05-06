@@ -5,10 +5,10 @@ const auth = require("../middlewares/auth")
 
 router.post("/",auth, task_controller.create)
 
-router.put("/:tid",auth, task_controller.edit)
+router.put("/",auth, task_controller.edit)
 
-router.delete("/:tid", auth, task_controller.delete)
+router.delete("/", auth, task_controller.delete)
 
-router.get("/:tid",auth,task_controller.task)
+router.get("/",auth,task_controller.task)
 
 module.exports = router

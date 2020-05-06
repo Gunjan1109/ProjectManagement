@@ -3,6 +3,7 @@ function register(){
     var name = document.getElementById("name").value
     var email = document.getElementById("email").value
     var password = document.getElementById("password").value
+    
     var xmlHttpRequest = new XMLHttpRequest()
     xmlHttpRequest.onreadystatechange = function () {
         if (this.readyState === 4) {

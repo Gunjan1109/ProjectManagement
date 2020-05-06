@@ -20,21 +20,10 @@
     <label for="textInput">Task Name</label>
     <input type="text" id="tname" class="form-control mb-4" placeholder="Name">
 
-      <label for="textInput">Description(if any)</label>
-        <input type="text" id="desc" class="form-control mb-4" placeholder="Description">
-
-     <label for="textInput">Deadline</label>
-        <input type="date" id="dueDate" class="form-control mb-4" placeholder="Due Date">
-
-
-     <label for="textInput">Assigned to</label>
-    <input type="email" id="assigned" class="form-control mb-4" placeholder="Email Address of person">
-
-
     <div>
         <p id="error" style="color: red;"></p>
     </div>
-    <button class="btn btn-info btn-block my-4" type="button" onclick="task()">Create</button>
+    <button class="btn btn-info btn-block my-4" type="button" onclick="task()">Delete</button>
 
     <p style="color: red;" id="error"></p>
 </form>
@@ -45,9 +34,6 @@
     function task(){
         var pname = document.getElementById("pname").value
         var tname = document.getElementById("tname").value
-        var desc = document.getElementById("desc").value
-        var dueDate = document.getElementById("dueDate").value
-        var assigned = document.getElementById("assigned").value
     var xmlHttpRequest = new XMLHttpRequest()
 xmlHttpRequest.onreadystatechange = function () {
     if (this.readyState === 4) {
@@ -60,10 +46,10 @@ xmlHttpRequest.onreadystatechange = function () {
         }
     }
 }
-xmlHttpRequest.open("POST", "/api/task/", true)
+xmlHttpRequest.open("DELETE", "/api/task/", true)
 xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
 xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
-xmlHttpRequest.send(JSON.stringify({ pname: pname, name : tname , description : desc , assignedTo : assigned,dueDate : dueDate}))
+xmlHttpRequest.send(JSON.stringify({ pname: pname, name : tname}))
     }
 </script>
 </html>
