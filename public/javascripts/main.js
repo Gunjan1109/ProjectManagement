@@ -63,7 +63,7 @@ else {
         printError("Please enter a valid name");
     }
     else {
-        nameErr = false;
+        nameerr = false;
     }
 
     if (email == "") {
@@ -74,7 +74,7 @@ else {
       if (regex.test(email) === false) {
           printError("Please enter a valid email address");
       } else {
-          emailErr = false;
+          emailerr = false;
       }
   }
 
@@ -82,7 +82,7 @@ else {
     printError("Please enter a password")
 }
 else {
-    passwordErr = false
+    passworderr = false
 }
 
 if ((nameerr || emailerr ||passworderr) == true) {
@@ -93,9 +93,9 @@ else {
 }
 }
 
-function printError(msg) {
-  document.getElementById("error").innerHTML = msg;
-}
+// function printError(msg) {
+//   document.getElementById("error").innerHTML = msg;
+// }
 }
 
 function signinvalidate(){
@@ -111,7 +111,7 @@ else {
     if (regex.test(email) === false) {
         printError("Please enter a valid email address");
     } else {
-        emailErr = false;
+        emailerr = false;
     }
 }
 
@@ -119,7 +119,7 @@ if (password == "") {
   printError("Please enter a password")
 }
 else {
-  passwordErr = false
+  passworderr = false
 }
 
 if ((emailerr ||passworderr) == true) {
@@ -129,7 +129,57 @@ else {
 login()
 }
 
+
+}
+
 function printError(msg) {
   document.getElementById("error").innerHTML = msg;
 }
+
+function login(){    
+  console.log("in login")
+var email = document.getElementById("email").value
+var password = document.getElementById("password").value
+var xmlHttpRequest = new XMLHttpRequest()
+xmlHttpRequest.onreadystatechange = function () {
+  if (this.readyState === 4) {
+      if (this.status === 200) {
+          document.cookie = "authorization=" + this.getResponseHeader("authorization")
+          console.log(this.getResponseHeader("authorization"))
+          console.log("signin success")
+          window.location = "/homepage"
+      }
+      else {
+          document.getElementById("error").innerText = JSON.parse(this.responseText).message
+      }
+  }
+}
+xmlHttpRequest.open("POST", "/api/users/signin", true)
+xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+xmlHttpRequest.send(JSON.stringify({ email: email, password: password }))   
+}
+
+
+function register(){    
+  console.log("in register")
+  var name = document.getElementById("name").value
+  var email = document.getElementById("email").value
+  var password = document.getElementById("password").value
+  
+  var xmlHttpRequest = new XMLHttpRequest()
+  xmlHttpRequest.onreadystatechange = function () {
+      if (this.readyState === 4) {
+          if (this.status === 200) {
+              console.log("signup success")
+              document.getElementById("message").innerHTML = JSON.parse(this.responseText).message
+              
+          }
+          else {
+              document.getElementById("error").innerText = JSON.parse(this.responseText).message
+          }
+      }
+  }
+  xmlHttpRequest.open("POST", "/api/users/signup", true)
+  xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+  xmlHttpRequest.send(JSON.stringify({ name: name, email: email, password: password }))
 }

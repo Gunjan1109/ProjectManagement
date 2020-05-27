@@ -185,18 +185,113 @@ exports.projectpage = function (req,res){
 }
 
 exports.taskpage = function(req,res){
-    res.render("task")
+     var data = {}
+    data.project = req.params.pname
+    console.log(data)
+    res.render("task",data)
 }
 
-exports.addmembers = function(req,res){
-    res.render("addmember")
-}
+// exports.members = function(req,res){
+//     var pname = req.params.pname
+
+
+// }
 
 exports.updatetask = function(req,res){
     
     res.render("updatetask")
 }
 
-exports.deletetaskpage = function(req,res){
-    res.render("deletetaskpage")
+exports.deletetask = function(req,res){
+   
+    var pname = req.params.name
+    var id = req.params.id
+    var data = {}
+    var promises = []
+    console.log("in delete")
+    
+        var taskPromise = new Promise((resolve, reject) => {
+            // Create options
+            const options = {
+                hostname: req.hostname,
+                port: 3000,
+                path: "/api/task/"+id,
+                method: "DELETE",
+                headers: { authorization: req.cookies.authorization }
+            }
+
+            // Make http request
+            const httpReq = http.request(options, httpRes => {
+                var buff = ""
+                httpRes.on("data", chunks => {
+                    buff += chunks
+                })
+
+                httpRes.on("end", () => {
+                    if (httpRes.statusCode === 200) {
+                        data = JSON.parse(buff)
+                        resolve()
+                    }
+                    else {
+                        reject(JSON.parse(buff))
+                    }
+
+                })
+            })
+
+            httpReq.on("error", error => {
+                reject(error)
+            })
+
+            httpReq.end()
+        })
+
+        
+        promises.push(taskPromise)
+
+        var userPromise = new Promise((resolve, reject) => {
+            // Create options
+            const options = {
+                hostname: req.hostname,
+                port: 3000,
+                path: "/api/projects/"+pname,
+                method: "GET",
+                headers: { authorization: req.cookies.authorization }
+            }
+
+            // Make http request
+            const httpReq = http.request(options, httpRes => {
+                var buff = ""
+                httpRes.on("data", chunks => {
+                    buff += chunks
+                })
+
+                httpRes.on("end", () => {
+                    if (httpRes.statusCode === 200) {
+                        data = JSON.parse(buff)
+                        resolve()
+                    }
+                    else {
+                        reject(JSON.parse(buff))
+                    }
+
+                })
+            })
+
+            httpReq.on("error", error => {
+                reject(error)
+            })
+
+            httpReq.end()
+        })
+        promises.push(userPromise)
+
+        Promise.all(promises).then(() => {
+            console.log(data)
+            res.render("beetle2", data)
+        }).catch(error => {
+            console.log(error)
+            res.render("error", error)
+        })
+    
 }

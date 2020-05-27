@@ -37,8 +37,9 @@ exports.edit = async (req, res) => {
   console.log(req.body.name)
   console.log("in edit")
   var t = await Task.findOne({name : req.body.name})
-  console.log("::::::::::::::::::::::::::::" + t.name + ":::::::::::::::::::::::::::::::::")
-  console.log("Id is ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" + t._id)
+  if(!t){
+  res.status(404).send("This task is not present")
+  }
   var task = await Task.findByIdAndUpdate(t._id,{"status": req.body.status})
 
   if (!task) {
@@ -50,8 +51,8 @@ exports.edit = async (req, res) => {
 }
 
 exports.delete = async (req, res) => {
-  var t = await Task.findOne({name : req.body.name})
-    var task = await Task.findByIdAndDelete(t._id)
+  console.log("In delete")
+    var task = await Task.findByIdAndDelete(req.params.id)
   console.log(task)
   res.status(200).send({ message: "Project deleted" })
 }
