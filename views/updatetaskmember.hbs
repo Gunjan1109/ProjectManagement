@@ -1,0 +1,48 @@
+<body>
+    <form class="border border-light p-5">
+
+    <p class="h4 mb-4 text-center">Update Task</p>
+
+    <label for="textInput">Project Name</label>
+    <input type="text" id="pname" disabled value="{{data.name}}" class="form-control mb-4" >
+
+     <label for="textInput">Status</label>
+      <select class="browser-default custom-select mb-4" id="status">
+        <option value="{{data.status}}" disabled="false" selected="true">{{data.status}}</option>
+        <option value="TODO">TODO</option>
+        <option value="STARTED">Started</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="REVIEWED">Reviewed</option>
+    </select>
+     <div>
+        <p id="error" style="color: red;"></p>
+    </div>
+    <button class="btn btn-info btn-block my-4" type="button" onclick="updatetask()">Update</button>
+
+</form>
+
+<script>
+   
+    function updatetask(){
+  var pname = document.getElementById("pname").value
+var access2 = document.getElementById('status')
+var status = access2.options[access2.selectedIndex].value
+var xmlHttpRequest = new XMLHttpRequest()
+xmlHttpRequest.onreadystatechange = function () {
+if (this.readyState === 4) {
+  if (this.status === 200) {
+      console.log("Creation of Task success")
+      window.location = "/memberhomepage2/" + pname
+  }
+  else {
+      document.getElementById("error").innerText = JSON.parse(this.responseText).message
+  }
+}
+}
+xmlHttpRequest.open("PUT", "/api/member/{{data.id}}", true)
+xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
+xmlHttpRequest.send(JSON.stringify({status : status}))
+    }
+</script>
+</body>

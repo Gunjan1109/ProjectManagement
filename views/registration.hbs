@@ -1,39 +1,28 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<meta charset="utf-8">
-	<title>Register for Beetle</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	<!-- LINEARICONS -->
-	<link rel="stylesheet" href="/fonts/linearicons/style.css">
-
-	<!-- STYLE CSS -->
-	<link rel="stylesheet" href="/stylesheets/style.css">
-	<script src="/javascripts/signup.js"></script>
-</head>
 
 <body>
-
+	
 	<div class="wrapper">
 		<div class="inner">
 			<img src="/images/image1.png" alt="" class="image-1">
 			<form>
-				<h3>New Account?</h3>
+				<h3>Register as Employee</h3>
 				<div class="form-holder">
 					<span class="lnr lnr-user"></span>
 					<input type="text" id="name" class="form-control" placeholder="Username" required>
+					<label for="name" id="invalid-name"></label>
 				</div>
 
 				<div class="form-holder">
 					<span class="lnr lnr-envelope"></span>
 					<input type="email" id="email" class="form-control" placeholder="Mail" required>
+					<label for="email" id="invalid-email"></label>
 				</div>
 				<div class="form-holder">
 					<span class="lnr lnr-lock"></span>
 					<input type="password" id="password" class="form-control" placeholder="Password" required>
+					<label for="password" id="invalid-pass"></label>
 				</div>
+				<p hidden id="isOwner">{{isOwner}}</p>
 
 				<button onclick="registervalidate()" type="button">
 					<span>Register</span>
@@ -54,4 +43,3 @@
 
 
 </body>
-</html>

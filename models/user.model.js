@@ -7,6 +7,8 @@ let userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     isConfirmed : {type : Boolean , default : false,required : true},
     projects : [{type : Schema.Types.ObjectId , ref : "Project",required : true}],
+    tasks :  [{type : Schema.Types.ObjectId , ref : "Tasks",required : true}],
+    isOwner : {type : Boolean, required : true}
    
 })
 

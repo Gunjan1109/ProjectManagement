@@ -1,7 +1,5 @@
 
-function projectpage(){
-    window.location = "/projectpage";
-  }
+
 
   function openproject(pname){
         console.log(pname)

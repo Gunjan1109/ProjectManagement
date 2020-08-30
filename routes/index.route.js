@@ -5,24 +5,43 @@ var index_controller = require('../controllers/index.controller')
 
 router.get("/", index_controller.startpage)
 
-router.get("/homepage" , index_controller.homepage)
+router.get("/verify", index_controller.verify)
 
-router.get("/signinpage",index_controller.signinpage)
+router.get("/ownerhomepage", index_controller.ownerhomepage)
 
-router.get("/signuppage" , index_controller.signuppage)
+router.get("/memberhomepage", index_controller.memberhomepage)
 
-router.get("/projectpage" , index_controller.projectpage)
+router.get("/newproject", index_controller.newproject)
 
-router.get("/homepage2/:pname" , index_controller.homepage2)
+router.get("/signuppageOwner", index_controller.signuppageOwner)
 
-router.get("/taskpage/:pname" , index_controller.taskpage)
+router.get("/signuppageMember", index_controller.signuppageMember)
 
-// router.get("/members/:pname",index_controller.members)
+router.get("/signinpageOwner", index_controller.signinpageOwner)
 
-router.get("/profile" , index_controller.profile)
+router.get("/signinpageMember", index_controller.signinpageMember)
 
-router.get("/updatetask", index_controller.updatetask)
+router.get("/ownerhomepage2/:pname", index_controller.ownerhomepage2)
 
-router.get("/deletetask/:id/:name",index_controller.deletetask)
+router.get("/memberhomepage2/:pname", index_controller.memberhomepage2)
 
-module.exports = router;
+router.get("/newTask/:pname", index_controller.newTask)
+
+router.get("/newTask", index_controller.myNewTask)
+
+router.get("/members/:name", index_controller.members)
+
+router.get("/viewmembers/:name" , index_controller.viewmembers)
+
+router.get("/addmemberpage/:pname", index_controller.addmember)
+
+
+// router.get("/profile" , index_controller.profile)
+
+router.get("/updatetask/:id/:name/:description/:author/:notes/:assignedTo/:pname/:dueDate/:status", index_controller.updatetask)
+
+router.get("/updatetaskmember/:id/:name/:status" , index_controller.updatetaskmember)
+
+// router.get("/deletetask/:id/:name",index_controller.deletetask)
+
+module.exports = router

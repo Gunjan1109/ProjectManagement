@@ -1,0 +1,74 @@
+<body>
+  {{#if data.owners}}
+     <caption><h2>Owners</h2></caption>
+    <table class="table table-bordered table-dark">
+
+  <tbody>
+      {{#each data.owners}}
+      <tr>
+      <td colspan="3">{{name}}</td>
+      <td>{{email}}</td>
+      <td><button type="button" value="{{_id}}" onclick="remove(this.value)" class="btn btn-warning">Remove</button></td>
+      </tr>
+    {{/each}}
+    {{/if}}
+  </tbody>
+  
+</table>
+
+{{#if data.members}}
+    <caption><h2>Members</h2></caption>
+  <table class="table table-bordered table-light">
+  <tbody>
+      {{#each data.members}}
+      <tr>
+      <td colspan="3">{{name}}</td>
+      <td>{{email}}</td>
+      <td><button type="button" value="{{_id}}" onclick="remove(this.value)" class="btn btn-warning">Remove</button></td>
+      </tr>
+    {{/each}}
+    
+  </tbody>
+  
+  </table>
+  {{else}}
+  <center><h2>No Members. Add New Members</h2></center>
+  {{/if}}
+  <div>
+    <button type="button" onclick="addmember()" class="btn btn-primary">Add Members</button>
+  </div>
+  <script>
+    function addmember(){
+      window.location = "/addmemberpage/{{data.name}}"
+    }
+
+    function remove(id){
+  var xmlHttpRequest = new XMLHttpRequest()
+  xmlHttpRequest.onreadystatechange = function () {
+      if (this.readyState === 4) {
+          if (this.status === 200) {
+              
+              window.location.reload()
+          }
+          else {
+            alert("Member could not be removed. Please try again")
+          }
+      }
+  }
+  xmlHttpRequest.open("POST", "/api/owner/remove/{{data.name}}/"+id, true)
+  xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+  xmlHttpRequest.setRequestHeader("Authorization", getCookie("authorization"));
+  xmlHttpRequest.send()
+    }
+
+    function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2)
+    return parts
+      .pop()
+      .split(";")
+      .shift();
+}
+  </script>
+</body>

@@ -1,57 +1,109 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body>
     <form class="border border-light p-5">
 
-    <p class="h4 mb-4 text-center">Add Member</p>
+    <p class="h4 mb-4 text-center">Add Members</p>
 
-    <label for="textInput">Project Name</label>
-    <input type="text" id="name" class="form-control mb-4" placeholder="Name">
+    <label for="textInput">Email-id</label>
+    <input type="email" id="email" class="form-control mb-4" placeholder="Email"> <i class="fas fa-plus-square fa-2x" onclick="validate()" style="color: blue; cursor: pointer;"></i>
+    <label for="email" id="invalid-email"></label>
 
-      <label for="textInput">Email</label>
-        <input type="text" id="email" class="form-control mb-4" placeholder="Email of person">
+        <button class="btn btn-info btn-block my-4" type="button" onclick="invite()">Add Members</button>
 
+    </form>
     
+    <h2>Candidates list</h2>
 
-    <div>
-        <p id="error" style="color: red;"></p>
-    </div>
-    <button class="btn btn-info btn-block my-4" type="button" onclick="addmember()">Add</button>
-
-</form>
+    <div id="list"></div>
 
     <script>
-        function addmember(){
-            console.log("in add")
-            var name = document.getElementById("name").value
-            var email = document.getElementById("email").value
+        let candidates = []
+        function validate() {
+            let email = document.getElementById("email").value;
+
+            // valid email
+            if (email == "") {
+               document.getElementById('invalid-email').innerHTML = "Please enter a email"
+               document.getElementById('invalid-email').style.color = "red"
+               document.getElementById('email').focus()
+            }
+            else {
+                var regex = /^\S+@\S+\.\S+$/;
+                if (regex.test(email) === false) {
+                    document.getElementById('invalid-email').innerHTML = "Please enter a valid email"
+                    document.getElementById('invalid-email').style.color = "red"
+                    document.getElementById('email').focus()
+                } 
+            else {
+                addElement()
+            }
+        }
+        }
+
+        function addElement() {
+            hideError()
+            if (candidates.indexOf(document.getElementById('email').value) < 0) {
+                candidates.push(document.getElementById('email').value);
+                document.getElementById('email').value = ''
+                disp();
+            }
+            else {
+                let p = document.getElementById("invalid-email")
+                p.innerText = "You already entered this email"
+                
+                return
+            }
+        };
+
+        function deleteElement(index) {
+            hideError()
+            candidates.splice(index, 1)
+            disp()
+        };
+
+         function disp() {
+            let str = ''
+            for (i = 0; i < candidates.length; i++) {
+                str += '<div class="row row-border my-row text-center align-items-center"><div class="col-3 col-border" id="list"><input type="email" value="' + candidates[i] + '" readonly></div><div class="col-1 col-border"><i class="fas fa-times fa-2x" onclick="deleteElement(' + candidates.indexOf(candidates[i]) + ')" style="color: blue; cursor: pointer;"></i></div></div>';
+            }
+            document.getElementById('list').innerHTML = str;
+        }; 
+
+         function hideError() {
+            let div = document.getElementById("invalid-email")
+            if (div.childNodes[0]) {
+                div.classList.remove("alert", "alert-danger")
+                div.removeChild(div.childNodes[0])
+            }
+        }
+
+        function invite(){
+            if (candidates.length == 0) {
+                let p = document.getElementById("invalid-email")
+                p.innerText = "Please add email ids of candidates."
+                
+                return
+            }
             var xmlHttpRequest = new XMLHttpRequest()
+            xmlHttpRequest.open("POST", `/api/owner/invite/{{name}}`, true)
+            xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+            xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
             xmlHttpRequest.onreadystatechange = function () {
                 if (this.readyState === 4) {
                     if (this.status === 200) {
-                       
-                        console.log("Add success")
-                        window.location = "/homepage"
+                        console.log("members added")
+                        window.location = "/ownerhomepage2/{{name}}"
+                        alert("Members Added")
                     }
                     else {
-                        document.getElementById("error").innerText = JSON.parse(this.responseText).message
+                        let p = document.getElementById("invalid-email")
+                        p.innerText = JSON.parse(this.responseText).message
+                       
                     }
                 }
             }
-            xmlHttpRequest.open("POST", "/api/projects/invite", true)
-            xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
-            xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
-            xmlHttpRequest.send(JSON.stringify({ name: name, email: email }))
+            xmlHttpRequest.send(JSON.stringify({ candidates: candidates }))           
         }
+
     </script>
 </body>
-</html>
+

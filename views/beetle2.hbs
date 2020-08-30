@@ -1,36 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+   .float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:rgb(99, 213, 233);
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+  z-index: 3;
+}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Beetle | Making work easy</title>
-    <link rel="stylesheet" href="/stylesheets/homepage2.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-        <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Rock+Salt&display=swap" rel="stylesheet">
-
-
-</head>
-
+.my-float{
+	margin-top:25px;
+}
+</style>
 <body style="background-color:#D4E6F1;">
     <div class="wrapper">
         <div class="header">
             <div id="logo">
                 <h1 text-align="left" margin-top="550px" margin-left="50px"><span>B</span>EETLE</h1>
             </div>
+            {{#if data.user.isOwner}}
             <div id="navbar">
                 <nav>
 
                     <ul>
-                        <li><button type="button" onclick="taskpage()" class="btn btn-primary">Add Task</button></li>
-                        <button type="button" class="btn btn-primary" onclick="members({{project._id}})">Edit Members</button>
+                        {{!-- <li><button type="button" onclick="newtask()" class="btn btn-primary">Add Task</button></li> --}}
+                        <li><button type="button" class="btn btn-danger" onclick="members()">Edit Members</button></li>
                         <li><button type="button" onclick="signout()" class="btn btn-warning">Sign Out</button></li>
 
                     </ul>
@@ -40,7 +39,7 @@
 
             </div>
         </div>
-
+   
 
         <div id="content">
             
@@ -49,36 +48,506 @@
             <!-- <h3><button type="button" class="btn btn-primary">Try BootNik</button></h3> -->
              </div>
       <br><br>
-       <div class="container">
-        <div class="row">
-         
-      {{#if project.tasks}}
-      {{#each project.tasks}}   
-       <div class="col-sm">
-        <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">{{name}}</h5>
-    <h6 class="card-subtitle mb-2 text-muted">Author : {{author}}</h6>
-    <h6 class="card-subtitle mb-2 text-muted">Due Date : {{dueDate}}</h6>
-    <h6 class="card-subtitle mb-2 text-muted">Assigned To : {{assignedTo}}</h6>
-    <br>
-    <p class="card-text">{{description}}</p>
-    <br>
-    <a class="card-link" style="color: green;">{{status}}</a>
-     <button type="button"onclick="updatetask()" class="btn btn-primary">Update Status</button>
-     <script>
-       function updatetask(){
-         window.location = "/updatetask"
-       }
-     </script>  
-     <button type="button" value="{{_id}}" onclick="deletetask(this.value)">D</button>
-     
-    </div>
-    </div>
-    </div>
-{{/each}}
-      {{/if}}
+       <div class="container-fluid">
+          <a href="/newTask/{{data.project.project.name}}" class="float">
+        <i class="fas fa-plus my-float"></i>
+        </a>
+         <div class="row">
+        {{#if data.project.project.tasks}}
+      <div id="TODO" class="col-sm">
+        <h2>TODO Tasks</h2>
+        <hr>
+      </div>
 
+      <div id="STARTED" class="col-sm">
+       <h2>STARTED Tasks</h2>
+       <hr>
+      </div>
+
+      <div id="COMPLETED" class="col-sm">
+       <h2>COMPLETED Tasks</h2>
+       <hr>
+      </div>
+
+      <div id="REVIEWED" class="col-sm">
+       <h2>REVIEWED Tasks</h2>
+       <hr>
+      </div>
+    {{else}}
+     <div style="height: 300px;">
+          <center><h3>No Tasks for this project</h3></center>
+        </div>
+        {{/if}}
+
+        
+</div>
+  
+       </div>
+
+  <br><br><br>
+
+<!-- Modal -->
+
+     
+      </div>
+      
+  <script>
+    let id;
+    function newtask(){
+      // console.log({{project.name}})
+      window.location = "/newTask/{{data.project.project.name}}"
+    }
+
+    function members(){
+      window.location = "/members/{{data.project.project.name}}"
+    }
+
+    window.onload = function (){
+      let pname = "{{data.project.project.name}}"
+      {{#if data.project.project.tasks}}
+      {{#each data.project.project.tasks}}
+          if(`{{status}}` =="TODO"){
+           
+            let todo = document.getElementById('TODO')
+
+  
+           let div1 = document.createElement('div')
+          
+           todo.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+           div2.style.marginBottom = "15px"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+            let h64 = document.createElement('h6')
+           h64.className = "card-subtitle mb-2 text-muted"
+           h64.innerHTML = "Notes : {{notes}}"
+          div3.appendChild(h64)
+
+          let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+          a.style.marginRight = "33px"
+          div3.appendChild(a)
+
+          let button1 = document.createElement('button')
+          button1.type = "button"
+          //button1.addEventListener('click',updatetask,`{{_id}}`,`{{name}}`,`{{author}}`,`{{dueDate}}`,`{{assignedTo}}`,`{{description}}`,`{{status}}`,`{{data.project.project.name}}`)
+          button1.addEventListener('click',function(){
+         window.location = "/updatetask/{{_id}}/{{name}}/{{description}}/{{author}}/{{notes}}/{{assignedTo}}/" + pname + "/{{dueDate}}/{{status}}"
+          })
+          button1.className = "btn btn-primary"
+          button1.innerText = "Edit"
+          button1.style.marginRight = "60px"
+
+          div3.appendChild(button1)
+
+          let button2 = document.createElement('button')
+          button2.type = "button"
+          button2.value = `{{_id}}`
+          id = `{{_id}}`
+          button2.addEventListener('click',deletetask.bind(id))
+          button2.innerText = "D"
+
+          div3.appendChild(button2)
+
+          
+            
+          }
+          else if(`{{status}}` == "STARTED"){
+
+            let started = document.getElementById('STARTED')
+
+            let div1 = document.createElement('div')
+          
+           started.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+            let h64 = document.createElement('h6')
+           h64.className = "card-subtitle mb-2 text-muted"
+           h64.innerHTML = "Notes : {{notes}}"
+          div3.appendChild(h64)
+
+
+         let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+          a.style.marginRight = "33px"
+          div3.appendChild(a)
+
+          let button1 = document.createElement('button')
+          button1.type = "button"
+          //button1.addEventListener('click',updatetask,`{{_id}}`,`{{name}}`,`{{author}}`,`{{dueDate}}`,`{{assignedTo}}`,`{{description}}`,`{{status}}`,`{{data.project.project.name}}`)
+          button1.addEventListener('click',function(){
+         window.location = "/updatetask/{{_id}}/{{name}}/{{description}}/{{author}}/{{notes}}/{{assignedTo}}/" + pname + "/{{dueDate}}/{{status}}"
+          })
+          button1.className = "btn btn-primary"
+          button1.innerText = "Edit"
+          button1.style.marginRight = "60px"
+
+          div3.appendChild(button1)
+
+
+          let button2 = document.createElement('button')
+          button2.type = "button"
+          button2.value = `{{_id}}`
+          id = `{{_id}}`
+          button2.addEventListener('click',deletetask.bind(id))
+          button2.innerText = "D"
+
+          div3.appendChild(button2)
+
+
+
+               
+          }
+          else if(`{{status}}` == "COMPLETED"){
+            console.log(name)
+
+             let completed = document.getElementById('COMPLETED')
+
+            let div1 = document.createElement('div')
+          
+           completed.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+           let h64 = document.createElement('h6')
+           h64.className = "card-subtitle mb-2 text-muted"
+           h64.innerHTML = "Notes : {{notes}}"
+          div3.appendChild(h64)
+
+         let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+          a.style.marginRight = "33px"
+          div3.appendChild(a)
+
+          let button1 = document.createElement('button')
+          button1.type = "button"
+          //button1.addEventListener('click',updatetask,`{{_id}}`,`{{name}}`,`{{author}}`,`{{dueDate}}`,`{{assignedTo}}`,`{{description}}`,`{{status}}`,`{{data.project.project.name}}`)
+          button1.addEventListener('click',function(){
+         window.location = "/updatetask/{{_id}}/{{name}}/{{description}}/{{author}}/{{notes}}/{{assignedTo}}/" + pname + "/{{dueDate}}/{{status}}"
+          })
+          button1.className = "btn btn-primary"
+          button1.innerText = "Edit"
+          button1.style.marginRight = "60px"
+
+          div3.appendChild(button1)
+
+
+          let button2 = document.createElement('button')
+          button2.type = "button"
+          button2.value = `{{_id}}`
+          id = `{{_id}}`
+          button2.addEventListener('click',deletetask.bind(id))
+          button2.innerText = "D"
+
+          div3.appendChild(button2)
+
+
+
+
+
+                
+          }
+          else{
+             let completed = document.getElementById('REVIEWED')
+
+            let div1 = document.createElement('div')
+          
+           completed.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+           let h64 = document.createElement('h6')
+           h64.className = "card-subtitle mb-2 text-muted"
+           h64.innerHTML = "Notes : {{notes}}"
+          div3.appendChild(h64)
+
+         let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+          a.style.marginRight = "33px"
+          div3.appendChild(a)
+
+          let button1 = document.createElement('button')
+          button1.type = "button"
+          //button1.addEventListener('click',updatetask,`{{_id}}`,`{{name}}`,`{{author}}`,`{{dueDate}}`,`{{assignedTo}}`,`{{description}}`,`{{status}}`,`{{data.project.project.name}}`)
+          button1.addEventListener('click',function(){
+         window.location = "/updatetask/{{_id}}/{{name}}/{{description}}/{{author}}/{{notes}}/{{assignedTo}}/" + pname + "/{{dueDate}}/{{status}}"
+          })
+          button1.className = "btn btn-primary"
+          button1.innerText = "Edit"
+          button1.style.marginRight = "60px"
+
+          div3.appendChild(button1)
+
+
+          let button2 = document.createElement('button')
+          button2.type = "button"
+          button2.value = `{{_id}}`
+          id = `{{_id}}`
+          button2.addEventListener('click',deletetask.bind(id))
+          button2.innerText = "D"
+
+          div3.appendChild(button2)
+
+
+
+
+
+          }
+      
+       {{/each}}
+
+       {{/if}}
+    }
+
+     var deletetask = function(){
+       console.log("id is ",id)
+    var xmlHttpRequest = new XMLHttpRequest()
+    xmlHttpRequest.onreadystatechange = function () {
+    if (this.readyState === 4) {
+      if (this.status === 200) {
+          console.log("Creation of Task success")
+          window.location.reload()
+      }
+     
+    }
+    }
+    xmlHttpRequest.open("DELETE", "/api/owner/task/" + id, true)
+    xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+        xmlHttpRequest.send()
+       }
+    
+       </script>
+
+      {{else}}
+      <div id="navbar">
+                <nav>
+
+                    <ul>
+                        <li><button type="button" class="btn btn-primary" onclick="viewmembers()">View Members</button></li>
+                        <li><button type="button" onclick="signout()" class="btn btn-warning">Sign Out</button></li>
+
+                    </ul>
+                    
+                </nav>
+
+
+            </div>
+        </div>
+   
+
+        <div id="content">
+            
+            <h2>Manage your work with Joy</h2>
+            
+             </div>
+      <br><br>
+       <div class="container-fluid">
+          
+         <div class="row">
+        {{#if data.project.project.tasks}}
+      <div id="TODO" class="col-sm">
+        <h2>TODO Tasks</h2>
+        <hr>
+      </div>
+
+      <div id="STARTED" class="col-sm">
+       <h2>STARTED Tasks</h2>
+       <hr>
+      </div>
+
+      <div id="COMPLETED" class="col-sm">
+       <h2>COMPLETED Tasks</h2>
+       <hr>
+      </div>
+
+      <div id="REVIEWED" class="col-sm">
+       <h2>REVIEWED Tasks</h2>
+       <hr>
+      </div>
+    {{else}}
+     <div style="height: 300px;">
+          <center><h3>No Tasks for this project</h3></center>
+        </div>
+        {{/if}}
+
+        
 </div>
        </div>
 
@@ -90,24 +559,303 @@
       </div>
       
   <script>
-                      function taskpage(){
-                       // console.log({{project.name}})
-                        window.location = "/taskpage/{{project.name}}"
-                      }
 
-                      function members(){
-                        window.location = "/members/{{project.name}}"
-                      }
-                     
-                    </script>
+    function viewmembers(){
+      window.location = "/viewmembers/{{data.project.project.name}}"
+    }
+    var email = `{{data.user.email}}`
+    window.onload = function (){
+      let pname = "{{data.project.project.name}}"
+      {{#if data.project.project.tasks}}
+      {{#each data.project.project.tasks}}
+          if((`{{status}}` =="TODO") && (`{{assignedTo}}` == email)){
+           
+            let todo = document.getElementById('TODO')
 
-  <script>
-       function deletetask(id){
-        window.location = "/deletetask/"+id+"/{{project.name}}"
-        
-       }
-     </script>                  
+  
+           let div1 = document.createElement('div')
+          
+           todo.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+           div2.style.marginBottom = "15px"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+          let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+
+          div3.appendChild(a)
+
+          let button1 = document.createElement('button')
+          button1.type = "button"
+          button1.addEventListener('click',function(){
+            window.location = "/updatetaskmember/{{_id}}/"+pname+"/{{status}}"
+          })
+          button1.className = "btn btn-primary"
+          button1.innerText = "Update Status"
+
+          div3.appendChild(button1)
+
+          
+          
+            
+          }
+          else if((`{{status}}` == "STARTED") && (`{{assignedTo}}` == email)){
+
+            let started = document.getElementById('STARTED')
+
+            let div1 = document.createElement('div')
+          
+           started.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+          let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+
+          div3.appendChild(a)
+
+          let button1 = document.createElement('button')
+          button1.type = "button"
+          button1.addEventListener('click',function(){
+            window.location = "/updatetaskmember/{{_id}}/"+pname+"/{{status}}"
+          })          
+          button1.className = "btn btn-primary"
+          button1.innerText = "Update Status"
+
+          div3.appendChild(button1)
+               
+          }
+         else if((`{{status}}` == "COMPLETED") && (`{{assignedTo}}` == email)){
+            console.log(name)
+
+             let completed = document.getElementById('COMPLETED')
+
+            let div1 = document.createElement('div')
+          
+           completed.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+          let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+
+          div3.appendChild(a)
+
+          let button1 = document.createElement('button')
+          button1.type = "button"
+          button1.addEventListener('click',function(){
+            window.location = "/updatetaskmember/{{_id}}/"+pname+"/{{status}}"
+          })
+          button1.className = "btn btn-primary"
+          button1.innerText = "Update Status"
+
+          div3.appendChild(button1)
+
+         
+         } 
+          else if((`{{status}}` == "REVIEWED") && (`{{assignedTo}}` == email)) {
+          
+             let completed = document.getElementById('REVIEWED')
+
+            let div1 = document.createElement('div')
+          
+           completed.appendChild(div1)
+
+           let div2 = document.createElement('div')
+           div2.className = "card"
+           div2.style.width = "18rem"
+
+           div1.appendChild(div2)
+
+           let div3 = document.createElement('div')
+           div3.className = "card-body"
+          div2.appendChild(div3)
+
+           let h5 = document.createElement('h5')
+           h5.className = "card-title"
+           h5.innerHTML = "{{name}}"
+
+           div3.appendChild(h5)
+
+           let h61 = document.createElement('h6')
+           h61.className = "card-subtitle mb-2 text-muted"
+           h61.innerHTML = "Author : {{author}}"
+
+           div3.appendChild(h61)
+
+           let h62 = document.createElement('h6')
+           h62.className = "card-subtitle mb-2 text-muted"
+           h62.innerHTML = "Due Date : {{dueDate}}"
+
+           div3.appendChild(h62)
+
+           let h63 = document.createElement('h6')
+           h63.className = "card-subtitle mb-2 text-muted"
+           h63.innerHTML = "Assigned To : {{assignedTo}}"
+
+           div3.appendChild(h63)
+
+           div3.appendChild(document.createElement('br'))
+
+           let p = document.createElement('p')
+           p.className = "card-text"
+           p.innerHTML = `{{description}}`
+
+           div3.appendChild(p)
+
+           div3.appendChild(document.createElement('br'))
+
+          let a = document.createElement('a')
+          a.className = "card-link"
+          a.style.color = "green"
+          a.innerHTML = `{{status}}`
+
+          div3.appendChild(a)
+
+         
+          }
+      
+       {{/each}}
+
+
+        {{/if}}
+    }
+    
+  </script>
+
+               
+     {{/if}}    
       
 </body>
-
-</html>

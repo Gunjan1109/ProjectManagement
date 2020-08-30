@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('dotenv').config()
 
 const mongoose = require("mongoose")
 var url =
@@ -23,9 +24,8 @@ mongoose
   })
 
 var indexRouter = require('./routes/index.route');
-var usersRouter = require('./routes/users.route');
-var projectRouter = require('./routes/project.route')
-var taskRouter = require('./routes/task.route')
+var ownerRouter = require('./routes/owner.route')
+var memberRouter = require('./routes/member.route')
 var app = express();
 
 // view engine setup
@@ -35,13 +35,12 @@ app.set("view engine", "hbs")
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser("Gunjan"));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/projects' , projectRouter)
-app.use('/api/task' , taskRouter)
+app.use('/api/owner', ownerRouter);
+app.use('/api/member' , memberRouter)
 
 
 // catch 404 and forward to error handler

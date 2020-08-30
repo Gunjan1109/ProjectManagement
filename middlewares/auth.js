@@ -3,11 +3,12 @@
 const Token = require("../models/user.token.model");
 
 module.exports = async function(req, res, next) {
-  const tokenId = req.headers["authorization"];
-  console.log(tokenId)
+  const tokenId = req.headers["authorization"]
   if (!tokenId) {
     // 401 : Unauthorized
-    return res.status(401).send({ message: "No User token provided" });
+    // path : req.originalUrl 
+    // isOwner : "true"
+    return res.redirect("/signin",{data : {path : req.originalUrl, isOwner : true}})
   }
 
   var token = await Token.findById(tokenId);

@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
 
-{{!-- <head>
-  <title>{{title}}</title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <script src="/javascripts/main.js"></script>
-</head> --}}
 <head>
-  <script src="/javascripts/main.js"></script>
+  <title>{{title}}</title>
+  <link rel='stylesheet' href={{cssfile}} />
+  <script src={{jsfile}}></script>
+  {{#if bootint}}
+  <link rel="stylesheet" href={{bootfile}}
+        integrity={{bootint}} crossorigin={{bootorigin}}>
+  {{else}}
+   <link rel="stylesheet" href={{bootfile}}>
+   {{/if}}      
+   {{#if fontfile}}
+  <link rel='stylesheet' href={{fontfile}} />      
+   {{/if}}
+   {{#if kit}}
+   <script src={{kit}} crossorigin="anonymous"></script>
+   {{/if}}
 </head>
+
 
 <body>
   {{{body}}}

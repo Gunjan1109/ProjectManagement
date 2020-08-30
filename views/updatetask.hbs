@@ -1,37 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
 <body>
     <form class="border border-light p-5">
 
     <p class="h4 mb-4 text-center">Update Task</p>
 
     <label for="textInput">Project Name</label>
-    <input type="text" id="pname" class="form-control mb-4" placeholder="Project Name">
+    <input type="text" id="pname" disabled value="{{data.project.project.name}}" class="form-control mb-4" >
 
     <label for="textInput">Task Name</label>
-    <input type="text" id="name" class="form-control mb-4" placeholder="Task Name">
+    <input type="text" id="tname" value="{{data.name}}" class="form-control mb-4" placeholder="Name">
+    <label for="tname" id="invalid-tname"></label><br>
+
+      <label for="textInput">Description</label>
+        <input type="text" id="desc" value="{{data.description}}" class="form-control mb-4" placeholder="Description">
+        <label for="desc" id="invalid-desc"></label><br>
+
+    <label for="textInput">Notes</label>
+        <input type="text" id="note" value="{{data.notes}}" class="form-control mb-4" placeholder="Note(if any)">
+         <label for="note" id="invalid-note"></label><br>
+
+    <label for="textInput">Author</label>
+        <input type="text" id="author" value="{{data.author}}" class="form-control mb-4" disabled>
+
+     <label for="textInput">Deadline</label>
+        <input type="date" id="dueDate" value="{{data.dueDate}}" class="form-control mb-4" placeholder="Due Date">
+         <label for="dueDate" id="invalid-dueDate"></label><br>
+
+
+     <label for="textInput">Assigned to</label>
+    <select class="browser-default custom-select mb-4" id="assigned">
+        <option value="{{data.assignedTo}}" disabled="false" selected="true">{{data.assignedTo}}</option>
+        {{#each data.project.project.members}}
+        <option value="{{email}}">{{email}}</option>
+        {{/each}}
+    </select>
+     <label for="assigned" id="invalid-assigned"></label><br>
 
      <label for="textInput">Status</label>
       <select class="browser-default custom-select mb-4" id="status">
-        <option value="" disabled="true" selected="">Set Status</option>
+        <option value="{{data.status}}" disabled="false" selected="true">{{data.status}}</option>
         <option value="TODO">TODO</option>
         <option value="STARTED">Started</option>
         <option value="COMPLETED">Completed</option>
+        <option value="REVIEWED">Reviewed</option>
     </select>
+     <label for="status" id="invalid-status"></label><br>
      <div>
         <p id="error" style="color: red;"></p>
     </div>
-    <button class="btn btn-info btn-block my-4" type="button" onclick="updatetask()">Update</button>
+    <button class="btn btn-info btn-block my-4" type="button" onclick="validate()">Update</button>
 
 </form>
+
+<script>
+    function validate(){
+         let tname = document.getElementById('tname').value
+  if(tname == ""){
+    document.getElementById('invalid-tname').innerHTML = "Please enter Task name"
+    document.getElementById('invalid-tname').style.color = "red"
+    document.getElementById('tname').focus()
+    return false
+}
+
+let desc = document.getElementById("desc").value
+if(desc == ""){
+  document.getElementById('invalid-desc').innerHTML = "Please enter Task description"
+  document.getElementById('invalid-desc').style.color = "red"
+  document.getElementById('desc').focus()
+  return false
+}
+
+let dueDate = document.getElementById("dueDate").value
+if(dueDate == ""){
+  document.getElementById('invalid-dueDate').innerHTML = "Please give a deadline"
+  document.getElementById('invalid-dueDate').style.color = "red"
+  document.getElementById('dueDate').focus()
+  return false
+} 
+
+let assigned = document.getElementById("assigned").value
+if(assigned == ""){
+  document.getElementById('invalid-assigned').innerHTML = "Please select a email-id to assign task"
+  document.getElementById('invalid-assigned').style.color = "red"
+  return false
+} 
+let status = document.getElementById('status').value
+if(status == ""){
+  document.getElementById('invalid-status').innerHTML = "Please select a status"
+  document.getElementById('invalid-status').style.color = "red"   
+}
+else{
+    updatetask()
+}
+    }
+
+    function updatetask(){
+  var pname = document.getElementById("pname").value
+  var name = document.getElementById("tname").value
+  var desc = document.getElementById("desc").value
+  var author = document.getElementById('author').value
+  var note = document.getElementById('note').value
+  var dueDate = document.getElementById("dueDate").value
+  var access1 = document.getElementById("assigned")
+var assigned = access1.options[access1.selectedIndex].value
+var access2 = document.getElementById('status')
+var status = access2.options[access2.selectedIndex].value
+var xmlHttpRequest = new XMLHttpRequest()
+xmlHttpRequest.onreadystatechange = function () {
+if (this.readyState === 4) {
+  if (this.status === 200) {
+      console.log("Creation of Task success")
+      window.location = "/ownerhomepage2/" + pname
+  }
+  else {
+      document.getElementById("error").innerText = JSON.parse(this.responseText).message
+  }
+}
+}
+xmlHttpRequest.open("PUT", "/api/owner/task/{{data.id}}", true)
+xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
+xmlHttpRequest.send(JSON.stringify({ pname: pname, name : name , description : desc ,author : author ,assignedTo : assigned,dueDate : dueDate,notes : note,status : status}))
+    }
+</script>
 </body>
-</html>

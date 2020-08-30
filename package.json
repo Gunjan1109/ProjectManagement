@@ -8,6 +8,7 @@
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "email-verification": "^0.4.6",
     "express": "~4.16.1",
     "hbs": "^4.1.1",

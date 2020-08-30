@@ -1,0 +1,34 @@
+<body>
+  {{#if data.owners}}
+  <caption><h2>Owners</h2></caption>
+    <table class="table table-bordered table-dark">
+  <tbody>
+      {{#each data.owners}}
+      <tr>
+      <td colspan="3">{{name}}</td>
+      <td>{{email}}</td>   
+      </tr> 
+    {{/each}}
+    {{/if}}
+  </tbody>
+  
+</table>
+
+{{#if data.members}}
+<caption><h2>Members</h2></caption>
+  <table class="table table-bordered table-light">
+  <tbody>
+      {{#each data.members}}
+      <tr>
+      <td>{{name}}</td>
+      <td>{{email}}</td>    
+      </tr>
+    {{/each}}
+    
+  </tbody>
+  
+  </table>
+  {{else}}
+  <center><h2>No Members</h2></center>
+  {{/if}}
+  </body>
