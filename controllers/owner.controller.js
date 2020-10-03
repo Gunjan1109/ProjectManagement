@@ -366,7 +366,9 @@ exports.createProject = async (req, res) => {
 
   exports.createTask = async(req,res) => {
     console.log(req.body)
-
+    if (!(req.body.file == undefined)) {
+    req.body.file = 'upload/' + req.body.file;
+  }
     await Project.findOne({name : req.params.pname},async(err,project) => {
         if(err){
             console.log("Project Not found")
@@ -383,6 +385,7 @@ exports.createProject = async (req, res) => {
                 description : req.body.description,
                 assignedTo : req.body.assignedTo, 
                 author : user.name,
+                file : req.body.file,
                 dueDate : req.body.dueDate,
                 notes : req.body.notes
             })

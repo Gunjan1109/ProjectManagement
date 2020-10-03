@@ -10,6 +10,8 @@ let userSchema = new mongoose.Schema({
     tasks :  [{type : Schema.Types.ObjectId , ref : "Tasks",required : true}],
     isOwner : {type : Boolean, required : true}
    
+},{
+    timestamps : true
 })
 
 module.exports = mongoose.model("User", userSchema)

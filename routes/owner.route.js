@@ -2,6 +2,31 @@ const express = require("express")
 const router = express.Router()
 const owner_controller = require("../controllers/owner.controller")
 const auth = require("../middlewares/auth")
+const multer = require('multer')
+
+router.use(express.static(__dirname+"./public/"))
+
+var storage = multer.diskStorage({
+    destination : function(req,res,cb){
+        cb(null, './public/upload/')
+    },
+    filename : function(req,file,cb){
+        var fileType = ''
+        if(fileType.mimetype === 'image/gif')
+        fileType = 'gif'
+        if (file.mimetype === 'image/png') {
+            filetype = 'png';
+          }
+          if (file.mimetype === 'image/jpeg') {
+            filetype = 'jpg';
+          }
+
+          cb(null,'image-' + Date.now() + '.' + fileType) 
+    }
+})
+
+var upload = multer({storage : storage})
+
 
 router.post("/signup", owner_controller.signup)
 
@@ -39,7 +64,7 @@ router.get("/projects",auth,owner_controller.projects)
 
 router.get("/privateprojects",auth,owner_controller.privateprojects)
 
-router.post("/task/:pname",auth, owner_controller.createTask)
+router.post("/task/:pname",auth,upload.single('file') ,owner_controller.createTask)
 
 router.post("/",auth,owner_controller.createOwnTask)
 

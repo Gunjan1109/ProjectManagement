@@ -10,6 +10,9 @@ let projectSchema = new mongoose.Schema({
     owners :  [{type : Schema.Types.ObjectId, ref : 'User',required : true}],
     creationDate : {type : Date , required : true},
 
+},
+{
+    timestamps : true
 })
 
 module.exports = mongoose.model("Project", projectSchema)

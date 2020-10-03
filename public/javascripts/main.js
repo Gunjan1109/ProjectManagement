@@ -1,3 +1,4 @@
+
 function getCookie(name) {
   var value = "; " + document.cookie;
   var parts = value.split("; " + name + "=");
@@ -366,7 +367,18 @@ function task(){
   if(note == ""){
     note = "No Notes provided"
   }
-  var dueDate = document.getElementById("dueDate").value
+  var pic;
+    if ($ ('#file').val () != '') {
+      var imageUploaded = $ ('#file')[0].files[0];
+      console.log("file uplaod" + imageUploaded);
+      pic = imageUploaded
+    }
+  if($('#file').val() == ''){
+    file = "no file provided"
+  }
+  console.log("file " + file);
+  
+  var dueDate = document.getElementById("dueDate").value  
   var access = document.getElementById("assigned")
 var assigned = access.options[access.selectedIndex].value
 var xmlHttpRequest = new XMLHttpRequest()
@@ -374,18 +386,18 @@ xmlHttpRequest.onreadystatechange = function () {
 if (this.readyState === 4) {
   if (this.status === 200) {
       console.log("Creation of Task success")
-      window.location = "/ownerhomepage2/" + pname
+     // window.location = "/ownerhomepage2/" + pname
   }
   else {
       document.getElementById("error").innerText = JSON.parse(this.responseText).message
   }
 }
 }
-xmlHttpRequest.open("POST", "/api/owner/task/" + pname, true)
-xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
-xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
-xmlHttpRequest.send(JSON.stringify({ pname: pname, name : name , description : desc , assignedTo : assigned,dueDate : dueDate,notes : note}))
-}
+// xmlHttpRequest.open("POST", "/api/owner/task/" + pname, true)
+// xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+// xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
+// xmlHttpRequest.send(JSON.stringify({ pname: pname, name : name , description : desc ,file:pic, assignedTo : assigned,dueDate : dueDate,notes : note}))
+ }
 
 function mytask(){
   var name = document.getElementById("tname").value
