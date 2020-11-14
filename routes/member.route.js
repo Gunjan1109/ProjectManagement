@@ -2,7 +2,6 @@ const express = require("express")
 const router = express.Router()
 const member_controller = require("../controllers/member.controller")
 const auth = require("../middlewares/auth")
-const { NotExtended } = require("http-errors")
 
 router.post("/signup", member_controller.signup)
 

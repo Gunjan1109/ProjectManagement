@@ -367,17 +367,7 @@ function task(){
   if(note == ""){
     note = "No Notes provided"
   }
-  var pic;
-    if ($ ('#file').val () != '') {
-      var imageUploaded = $ ('#file')[0].files[0];
-      console.log("file uplaod" + imageUploaded);
-      pic = imageUploaded
-    }
-  if($('#file').val() == ''){
-    file = "no file provided"
-  }
-  console.log("file " + file);
-  
+ 
   var dueDate = document.getElementById("dueDate").value  
   var access = document.getElementById("assigned")
 var assigned = access.options[access.selectedIndex].value
@@ -393,10 +383,10 @@ if (this.readyState === 4) {
   }
 }
 }
-// xmlHttpRequest.open("POST", "/api/owner/task/" + pname, true)
-// xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
-// xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
-// xmlHttpRequest.send(JSON.stringify({ pname: pname, name : name , description : desc ,file:pic, assignedTo : assigned,dueDate : dueDate,notes : note}))
+xmlHttpRequest.open("POST", "/api/owner/task/" + pname, true)
+xmlHttpRequest.setRequestHeader("Content-Type", "application/json")
+xmlHttpRequest.setRequestHeader("authorization", getCookie("authorization"));
+xmlHttpRequest.send(JSON.stringify({ pname: pname, name : name , description : desc ,file:pic, assignedTo : assigned,dueDate : dueDate,notes : note}))
  }
 
 function mytask(){

@@ -22,12 +22,10 @@ exports.signinpageMember = function(req,res){
 }
 
 exports.verify = function(req,res){
-    console.log("in verify")
     res.render("verify")
 }
 
 exports.ownerhomepage = function (req, res) {
-        console.log('cookies :', req.signedCookies['authorization'])
     
         var data = {}
         var promises = []
@@ -147,7 +145,7 @@ exports.ownerhomepage = function (req, res) {
     
             Promise.all(promises).then(() => {
                 if (data)
-                    console.log(data)
+                   
                 res.render("beetle", {data : data ,kit : "https://kit.fontawesome.com/7a3d763a1b.js", title : "BEETLE" , cssfile : "/stylesheets/beetle.css" , jsfile : "/javascripts/main.js", bootfile : "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"})
             }).catch(error => {
                 console.log(error)
@@ -161,7 +159,6 @@ exports.ownerhomepage = function (req, res) {
     }
     
     exports.memberhomepage = function (req, res) {
-        console.log('cookies :', req.cookies.authorization)
     
         var data = {}
         var promises = []
@@ -279,7 +276,7 @@ exports.ownerhomepage = function (req, res) {
             promises.push(privateprojectPromise)
             Promise.all(promises).then(() => {
                 if (data)
-                    console.log(data)
+                   
                 res.render("beetle", {data : data , title : "BEETLE" , cssfile : "/stylesheets/beetle.css" , jsfile : "/javascripts/main.js", bootfile : "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"})
             }).catch(error => {
                 console.log(error)
@@ -301,7 +298,7 @@ exports.ownerhomepage = function (req, res) {
         if(pname.includes("%20")){
             pname.replace("%20"," ")
         }
-        console.log(pname)
+        
         var data ={}
         var promises = []
 
@@ -382,7 +379,7 @@ exports.ownerhomepage = function (req, res) {
         promises.push(userPromise)
         Promise.all(promises).then(() => {
             if (data)
-                console.log(data)
+            
             res.render("beetle2", {data : data ,kit : "https://kit.fontawesome.com/7a3d763a1b.js" , title : "BEETLE" , cssfile : "/stylesheets/homepage2.css" , jsfile : "/javascripts/main.js", bootfile : "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" , bootint : "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" , bootorigin : "anonymous"})
         }).catch(error => {
             console.log(error)
@@ -472,7 +469,7 @@ exports.ownerhomepage = function (req, res) {
         promises.push(userPromise)
         Promise.all(promises).then(() => {
             if (data)
-                console.log(data)
+               
             res.render("beetle2", {data : data ,kit : "https://kit.fontawesome.com/7a3d763a1b.js" , title : "BEETLE" , cssfile : "/stylesheets/homepage2.css" , jsfile : "/javascripts/main.js", bootfile : "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" , bootint : "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" , bootorigin : "anonymous"})
         }).catch(error => {
             console.log(error)
@@ -524,7 +521,7 @@ exports.ownerhomepage = function (req, res) {
         promises.push(projectPromise)
         Promise.all(promises).then(() => {
             if (data)
-                console.log(data)
+               
                 res.render("task",{data : data,title : "New Task",jsfile : "/javascripts/main.js", bootfile : "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", bootint : "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" , bootorigin : "anonymous"})
             }).catch(error => {
             console.log(error)
@@ -579,7 +576,7 @@ exports.ownerhomepage = function (req, res) {
         
         
             Promise.all(promises).then(() => {
-                console.log(data)
+               
                 res.render("members", {data : data ,jsfile : "/javascripts/main.js" ,title : "Members" , bootfile : "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", bootint : "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" , bootorigin : "anonymous"})
             }).catch(error => {
                 console.log(error)
@@ -633,7 +630,7 @@ exports.ownerhomepage = function (req, res) {
 
 
     Promise.all(promises).then(() => {
-        console.log(data)
+       
         res.render("viewmembers", {data : data ,jsfile : "/javascripts/main.js" ,title : "Members" , bootfile : "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css", bootint : "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" , bootorigin : "anonymous"})
     }).catch(error => {
         console.log(error)
@@ -700,7 +697,7 @@ exports.updatetask = function(req,res){
         promises.push(projectPromise)
         Promise.all(promises).then(() => {
             if (data)
-                console.log(data)
+               
                 res.render("updatetask",{data : data,jsfile : "/javascripts/main.js", title : "Edit Task" , bootfile : "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css",bootint : "sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" , bootorigin : "anonymous"})
             }).catch(error => {
             console.log(error)
