@@ -191,16 +191,7 @@ exports.signup = async (req,res) => {
       
 exports.retrieveuser = async (req, res) => {
 // Send user associated with userId
-console.log("......................... ",req.baseUrl);
-console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",req.originalUrl);
-console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`",req.url);
-console.log("````````````````````````````````",req.path);
-console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>",req.fresh);
-console.log("::::::::::::::::::::::::::::",req.hostname);
-console.log("???????????????????????????",req.ip);
-console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22",req.route);
-console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",req.signedCookies);
-console.log("in retrieve")
+
 var user =(await User.findById(req.token.userId)).populate("tasks")
 if (!user) {
     res.status(404).send({ message: "User not found" })
@@ -354,21 +345,18 @@ exports.createProject = async (req, res) => {
   
   exports.projects = async(req,res) => {
     var projects = await Project.find({accessType : "Public"}).populate("tasks").populate("members")
-    console.log(projects)
     res.status(200).send({projects})
   }
 
   exports.privateprojects = async(req,res) => {
       var privateprojects = await Project.find({accessType : "Private"}).populate("tasks").populate("members")
-      console.log(privateprojects)
+
     res.status(200).send({privateprojects})
   }
 
   exports.createTask = async(req,res) => {
-    console.log(req.body)
-    if (!(req.body.file == undefined)) {
-    req.body.file = 'upload/' + req.body.file;
-  }
+   
+    
     await Project.findOne({name : req.params.pname},async(err,project) => {
         if(err){
             console.log("Project Not found")
@@ -385,7 +373,6 @@ exports.createProject = async (req, res) => {
                 description : req.body.description,
                 assignedTo : req.body.assignedTo, 
                 author : user.name,
-                file : req.body.file,
                 dueDate : req.body.dueDate,
                 notes : req.body.notes
             })
@@ -444,13 +431,13 @@ exports.createProject = async (req, res) => {
   exports.deleteTask = async (req, res) => {
     console.log("In delete task")
       var task = await Task.findByIdAndDelete(req.params.tid)
-    console.log(task)
+    
     res.status(200).send({ message: "Task deleted" })
   }
 
   exports.task = async(req,res) => {
     var task = await Task.findById(req.params.tid)
-    console.log(task)
+    
     if(!task)
     res.status(404).send({message : "Task Not found"})
     res.status(200).send({task})
